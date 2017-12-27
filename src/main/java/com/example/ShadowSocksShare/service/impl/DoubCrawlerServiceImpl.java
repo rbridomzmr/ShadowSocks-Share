@@ -37,7 +37,7 @@ public class DoubCrawlerServiceImpl extends ShadowSocksCrawlerService {
 				String ssrHtml = element.attributes().get("href");
 				String ssrLink = ssrHtml.replace("http://doub.pw/qr/qr.php?text=", "");
 
-				ShadowSocksDetailsEntity ss = new ShadowSocksDetailsEntity(ssrLink);
+				ShadowSocksDetailsEntity ss = parseLink(ssrLink);
 				ss.setValid(false);
 				ss.setRemarks(document.title());
 				// ss.setGroup(getTargetURL());

@@ -20,7 +20,7 @@ public class ShadowSocksDetailsEntityTest {
 	@Test
 	public void testsetLink() {
 		String str = "ssr://MjE2LjE4OS4xNTguMTQ3OjM1MDc6YXV0aF9hZXMxMjhfc2hhMTpjaGFjaGEyMDp0bHMxLjJfdGlja2V0X2F1dGg6Wkc5MVlpNXBieTl6YzNwb1puZ3ZLbVJ2ZFdJdVltbGtMM056ZW1obWVDOHFNelV3TncvP3JlbWFya3M9NXB5czZMU201WS0zNXAybDZJZXFPbVJ2ZFdJdWFXOHZjM042YUdaNEwtbVZuT1dEai1XZm4tV1FqVHBrYjNWaUxtSnBaQzl6YzNwb1puZ3Y";
-		log.debug("{}", new ShadowSocksDetailsEntity(str));
+		// log.debug("{}", new ShadowSocksDetailsEntity(str));
 		// log.debug("{}", new ShadowSocksDetailsEntity(str).getLink());
 	}
 
