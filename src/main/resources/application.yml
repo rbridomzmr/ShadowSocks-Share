@@ -1,0 +1,16 @@
+# ========== 数据库配置 ==========
+spring:
+  profiles:
+    active: dev
+
+  # 字符集
+  mandatory-file-encoding: UTF-8
+  tomcat.uri-encoding: UTF-8
+  messages.encoding: UTF-8
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+
+banner.charset: UTF-8

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{app.title}"></title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
+    <!-- Font Awesome -->
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+    <!-- 自定义 css -->
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="fa fa-paper-plane-o fa-1x fa-flip-horizontal" aria-hidden="true"></i>
+        </a>
+        <!-- 屏幕缩小后的导航按钮 -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars01"
+                aria-controls="navbars01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbars01">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">首页<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">SSR 订阅</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" th:href="@{/subscribe}" target="_blank">有效 SSR 订阅</a>
+                        <a class="dropdown-item" th:href="@{/subscribe}" target="_blank">全部 SSR 订阅</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">爬取列表</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown02">
+                        <a class="dropdown-item" th:href="@{/subscribe}" target="_blank">有效 SSR 订阅</a>
+                        <a class="dropdown-item" th:href="@{/subscribe}" target="_blank">全部 SSR 订阅</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">关于</a>
+                </li>
+            </ul>
+            <!--<form class="form-inline my-2 my-md-0">
+                <input class="form-control" type="text" placeholder="Search" aria-label="Search"/>
+            </form>-->
+            <a class="github-button" href="https://github.com/zc-zh-001/ShadowSocks-Share/subscription"
+               data-icon="octicon-eye" aria-label="Watch zc-zh-001/ShadowSocks-Share on GitHub">Watch</a>&nbsp;&nbsp;
+            <a class="github-button" href="https://github.com/zc-zh-001/ShadowSocks-Share" data-icon="octicon-star"
+               aria-label="Star zc-zh-001/ShadowSocks-Share on GitHub">Star</a>&nbsp;&nbsp;
+            <a class="github-button" href="https://github.com/zc-zh-001/ShadowSocks-Share/fork"
+               data-icon="octicon-repo-forked" aria-label="Fork zc-zh-001/ShadowSocks-Share on GitHub">Fork</a>
+        </div>
+    </div>
+</nav>
+
+<main role="main">
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">SSR 免费账号共享</h1>
+            <p>免费、开源的 SSR 账号爬取项目，支持订阅</p>
+            <p>项目地址：https://github.com/zc-zh-001/ShadowSocks-Share</p>
+            <del>This line of text is meant to be treated as deleted text.</del>
+            <p><a class="btn btn-primary btn-lg" href="https://github.com/zc-zh-001/ShadowSocks-Share" target="_blank"
+                  role="button">查看项目 &raquo;</a></p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!--<div class="row">
+            <th:block th:each="ssr,iterStat : ${ssrList}">
+                <div class="col-md-4">
+                    <h2 th:text="${'网站 ' + (iterStat.index + 1)}"></h2>
+                    <p th:text="${'地址：' + ssr.targetURL}"></p>
+                    <p th:text="${'网站：' + ssr.title}"></p>
+                    <p th:text="${'是否有效：' + ssr.valid}"></p>
+                    <p th:text="${'爬取时间：' + ssr.finishTime}"></p>
+                    <p><a class="btn btn-secondary" href="#" role="button">二维码 &raquo;</a></p>
+                </div>
+            </th:block>
+        </div>-->
+
+
+        <div class="row">
+            <div class="col-md-3" th:each="ssrd,iterStat : ${ssrdList}">
+                <div class="card">
+                    <img class="card-img-top" th:src="@{/createQRCode(width=350,height=350,text=${ssrd.link})}"/>
+                    <div class="card-body">
+                        <h4 class="card-title">Card title</h4>
+                        <p class="card-text">
+                            地址：<th:block th:text="${ssrd.server}"/><br/>
+                            端口：<th:block th:text="${ssrd.server_port}"/><br/>
+                            密码：<th:block th:text="${ssrd.password}"/><br/>
+                            加密：<th:block th:text="${ssrd.method}"/><br/>
+                            协议：<th:block th:text="${ssrd.protocol}"/><br/>
+                            混淆：<th:block th:text="${ssrd.obfs}"/>
+                        </p>
+                        <a href="#" class="btn btn-secondary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /container -->
+</main>
+
+<hr/>
+<footer class="footer">
+    <div class="container">
+        <p class="float-right">
+            <a href="#"><i class="fa fa-arrow-up" aria-hidden="true"></i>&nbsp;返回顶部</a>
+        </p>
+        <p class="text-muted">&copy; 2017 xxx, Inc. 免费、开源的 SSR 账号爬虫 <a
+                href="https://github.com/zc-zh-001/ShadowSocks-Share"
+                target="_blank">查看项目 &raquo;</a></p>
+    </div>
+</footer>
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+        integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+        crossorigin="anonymous"></script>
+<!--<script src="https://cdn.bootcss.com/holder/2.9.4/holder.min.js"></script>-->
+<script src="https://buttons.github.io/buttons.js"></script>
+<script th:src="@{/js/common.js}"></script>
+
+</body>
+</html>

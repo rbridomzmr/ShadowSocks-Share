@@ -1,0 +1,68 @@
+# ========== 自定义 ==========
+
+
+
+# ========== Spring ==========
+spring:
+  # Spring 数据库
+  datasource:
+    platform: h2
+    url:  jdbc:h2:~/test
+    driver-class-name:  org.h2.Driver
+    username: sa
+    password: unrDG0Nb3r4l
+    # 关闭 Spring JDBC初始化数据库
+    initialize: false
+    # 对数据库的结构进行操作
+    # schema: classpath:schema.sql
+    # 对数据操作
+    # data: classpath:data.sql
+
+  # Spring H2 配置
+  h2:
+    console:
+      # 程序开启时就会启动h2 web consloe(默认启动：true)
+      enabled:  true
+      # 通过YOUR_URL/h2访问
+      path: /h2
+      # 远程访问
+      settings.web-allow-others:  true
+
+  # Spring JPA 配置
+  jpa:
+    generate-ddl:  true
+    show-sql:  true
+    open-in-view:  true
+
+    hibernate:
+      # 使用Hibernate初始化数据库
+      ddl-auto:  create-drop
+
+  # Spring 国际化配置
+  messages:
+    basename: i18n/messages
+    encoding:  UTF-8
+    # 重载资源文件时间
+    cache-seconds: -1
+    # 没有特定的locale，则默认使用当下系统的设置
+    fallback-to-system-local: true
+
+
+# ========== 其他 ==========
+# 系统监控
+management.security.enabled:  false
+
+
+# ========== 日志 ==========
+logging:
+  # 日志输出格式
+  pattern.console:  "%date %-5level [${HOSTNAME} %thread %X{LOGS_USER}] %caller{1}%msg%n"
+  # 输出级别
+  level:
+    com.example.ShadowSocksShare: DEBUG
+
+    org.jsoup:  DEBUG
+    # hibernate
+    org.hibernate:  DEBUG
+
+    root: INFO
