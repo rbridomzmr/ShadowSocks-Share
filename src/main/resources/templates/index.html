@@ -94,7 +94,7 @@
 
         <div class="row">
             <div class="col-md-4" th:each="ssrd,iterStat : ${ssrdList}">
-                <div class="card mb-6">
+                <div class="card mb-3">
                     <div class="card-header">
                         <span class="badge" th:text="${ssrd.valid ? '有效' : '无效'}"
                               th:classappend="${ssrd.valid ? 'badge-success' : 'badge-danger'}">
