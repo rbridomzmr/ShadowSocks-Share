@@ -92,13 +92,13 @@
             </th:block>
         </div>-->
 
-
         <div class="row">
-            <div class="card-deck">
-                <div class="card" th:each="ssrd,iterStat : ${ssrdList}">
+            <div class="col-md-4" th:each="ssrd,iterStat : ${ssrdList}">
+                <div class="card">
                     <div class="card-header">
                         <span class="badge" th:text="${ssrd.valid ? '有效' : '无效'}"
-                              th:classappend="${ssrd.valid ? 'badge-success' : 'badge-danger'}"></span>
+                              th:classappend="${ssrd.valid ? 'badge-success' : 'badge-danger'}">
+                        </span>
                     </div>
                     <!--<img class="card-img-top" th:src="@{/createQRCode(width=350,height=350,text=${ssrd.link})}"/>-->
                     <div class="card-body">
@@ -137,7 +137,9 @@
                         <!--<a th:href="@{/createQRCode(width=350,height=350,text=${ssrd.link})}" target="_blank"
                            class="btn btn-info btn-block btn-sm"><i class="fa fa-clone" aria-hidden="true"></i> 复制连接</a>-->
                         <a th:href="@{/createQRCode(width=350,height=350,text=${ssrd.link})}" target="_blank"
-                           class="btn btn-secondary btn-block btn-sm"><i class="fa fa-qrcode" aria-hidden="true"></i> 二维码 &raquo;</a>
+                           class="btn btn-secondary btn-block btn-sm"><i class="fa fa-qrcode" aria-hidden="true"></i>
+                            二维码
+                            &raquo;</a>
                     </div>
                 </div>
             </div>
