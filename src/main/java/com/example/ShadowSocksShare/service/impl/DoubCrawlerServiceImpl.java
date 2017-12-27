@@ -19,7 +19,7 @@ import java.util.Set;
 @Service
 public class DoubCrawlerServiceImpl extends ShadowSocksCrawlerService {
 	// 网站刷新时间（抓取SS信息间隔时间）
-	public static final int REFRESH_TIME = 3 * 60 * 60 * 1000;
+	public static final int REFRESH_TIME = 20 * 60 * 60 * 1000;
 	// 目标网站 URL
 	private static final String TARGET_URL = "https://doub.io/sszhfx/";
 

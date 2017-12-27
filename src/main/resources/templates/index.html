@@ -46,8 +46,8 @@
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">爬取列表</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown02">
-                        <a class="dropdown-item" th:href="@{/subscribe}" target="_blank">有效 SSR 订阅</a>
-                        <a class="dropdown-item" th:href="@{/subscribe}" target="_blank">全部 SSR 订阅</a>
+                        <a class="dropdown-item" th:href="${ssr.targetURL}" target="_blank"
+                           th:each="ssr,iterStat : ${ssrList}" th:text="${ssr.targetURL}"></a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -73,7 +73,6 @@
             <h1 class="display-3">SSR 免费账号共享</h1>
             <p>免费、开源的 SSR 账号爬取项目，支持订阅</p>
             <p>项目地址：https://github.com/zc-zh-001/ShadowSocks-Share</p>
-            <del>This line of text is meant to be treated as deleted text.</del>
             <p><a class="btn btn-primary btn-lg" href="https://github.com/zc-zh-001/ShadowSocks-Share" target="_blank"
                   role="button">查看项目 &raquo;</a></p>
         </div>
@@ -95,20 +94,50 @@
 
 
         <div class="row">
-            <div class="col-md-3" th:each="ssrd,iterStat : ${ssrdList}">
-                <div class="card">
-                    <img class="card-img-top" th:src="@{/createQRCode(width=350,height=350,text=${ssrd.link})}"/>
+            <div class="card-deck">
+                <div class="card" th:each="ssrd,iterStat : ${ssrdList}">
+                    <div class="card-header">
+                        <span class="badge" th:text="${ssrd.valid ? '有效' : '无效'}"
+                              th:classappend="${ssrd.valid ? 'badge-success' : 'badge-danger'}"></span>
+                    </div>
+                    <!--<img class="card-img-top" th:src="@{/createQRCode(width=350,height=350,text=${ssrd.link})}"/>-->
                     <div class="card-body">
-                        <h4 class="card-title">Card title</h4>
-                        <p class="card-text">
-                            地址：<th:block th:text="${ssrd.server}"/><br/>
-                            端口：<th:block th:text="${ssrd.server_port}"/><br/>
-                            密码：<th:block th:text="${ssrd.password}"/><br/>
-                            加密：<th:block th:text="${ssrd.method}"/><br/>
-                            协议：<th:block th:text="${ssrd.protocol}"/><br/>
-                            混淆：<th:block th:text="${ssrd.obfs}"/>
-                        </p>
-                        <a href="#" class="btn btn-secondary">Go somewhere</a>
+                        <!--<h4 class="card-title">Card title</h4>-->
+                        <div class="card-text">
+                            <dl class="row">
+                                <dt class="col-md-3">地址</dt>
+                                <dd class="col-md-9">
+                                    <th:block th:text="${ssrd.server}"/>
+                                </dd>
+
+                                <dt class="col-sm-3">端口</dt>
+                                <dd class="col-sm-9">
+                                    <th:block th:text="${ssrd.server_port}"/>
+                                </dd>
+                                <dt class="col-sm-3">密码</dt>
+                                <dd class="col-sm-9">
+                                    <th:block th:text="${ssrd.password}"/>
+                                </dd>
+                                <dt class="col-sm-3">加密</dt>
+                                <dd class="col-sm-9">
+                                    <th:block th:text="${ssrd.method}"/>
+                                </dd>
+                                <dt class="col-sm-3">协议</dt>
+                                <dd class="col-sm-9">
+                                    <th:block th:text="${ssrd.protocol}"/>
+                                </dd>
+                                <dt class="col-sm-3">混淆</dt>
+                                <dd class="col-sm-9">
+                                    <th:block th:text="${ssrd.obfs}"/>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <!--<a th:href="@{/createQRCode(width=350,height=350,text=${ssrd.link})}" target="_blank"
+                           class="btn btn-info btn-block btn-sm"><i class="fa fa-clone" aria-hidden="true"></i> 复制连接</a>-->
+                        <a th:href="@{/createQRCode(width=350,height=350,text=${ssrd.link})}" target="_blank"
+                           class="btn btn-secondary btn-block btn-sm"><i class="fa fa-qrcode" aria-hidden="true"></i> 二维码 &raquo;</a>
                     </div>
                 </div>
             </div>
