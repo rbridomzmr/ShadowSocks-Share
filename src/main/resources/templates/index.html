@@ -38,8 +38,8 @@
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">SSR 订阅</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" th:href="@{/subscribe}" target="_blank">有效 SSR 订阅</a>
-                        <a class="dropdown-item" th:href="@{/subscribe}" target="_blank">全部 SSR 订阅</a>
+                        <a class="dropdown-item" th:href="@{/subscribe(valid=1)}" target="_blank">有效 SSR 订阅</a>
+                        <a class="dropdown-item" th:href="@{/subscribe(valid=0)}" target="_blank">全部 SSR 订阅</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown" th:unless="${#lists.isEmpty(ssrList)}">
@@ -47,7 +47,8 @@
                        aria-haspopup="true" aria-expanded="false">爬取列表</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown02">
                         <a class="dropdown-item" th:href="${ssr.targetURL}" target="_blank"
-                           th:each="ssr,iterStat : ${ssrList}" th:text="${ssr.targetURL}"></a>
+                           th:each="ssr,iterStat : ${ssrList}" th:text="${ssr.targetURL}">
+                        </a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -71,10 +72,12 @@
     <div class="jumbotron">
         <div class="container">
             <h1 class="display-3">SSR 免费账号共享</h1>
-            <p>免费、开源的 SSR 账号爬取项目，支持订阅</p>
-            <p>项目地址：https://github.com/zc-zh-001/ShadowSocks-Share</p>
-            <p><a class="btn btn-primary btn-lg" href="https://github.com/zc-zh-001/ShadowSocks-Share" target="_blank"
-                  role="button">查看项目 &raquo;</a></p>
+            <p>免费、开源的 SSR 账号爬取项目，支持订阅。<a
+                    href="https://github.com/zc-zh-001/ShadowSocks-Share"
+                    target="_blank">查看项目 &raquo;</a></p>
+            <!--<p>项目地址：https://github.com/zc-zh-001/ShadowSocks-Share</p>-->
+            <!--<p><a class="btn btn-primary" href="https://github.com/zc-zh-001/ShadowSocks-Share" target="_blank"
+                  role="button">查看项目 &raquo;</a></p>-->
         </div>
     </div>
 
@@ -95,21 +98,26 @@
         <div class="row">
             <div class="col-md-4" th:each="ssrd,iterStat : ${ssrdList}">
                 <div class="card mb-4">
-                    <div class="card-header">
+                    <!--<div class="card-header">
                         <span class="badge" th:text="${ssrd.valid ? '有效' : '无效'}"
                               th:classappend="${ssrd.valid ? 'badge-success' : 'badge-danger'}">
                         </span>
-                    </div>
+                    </div>-->
                     <!--<img class="card-img-top" th:src="@{/createQRCode(width=350,height=350,text=${ssrd.link})}"/>-->
                     <div class="card-body">
                         <!--<h4 class="card-title">Card title</h4>-->
                         <div class="card-text">
                             <dl class="row">
+                                <dt class="col-md-3">状态</dt>
+                                <dd class="col-md-9">
+                                    <span class="badge" th:text="${ssrd.valid ? '有效' : '无效'}"
+                                          th:classappend="${ssrd.valid ? 'badge-success' : 'badge-danger'}">
+                                    </span>
+                                </dd>
                                 <dt class="col-md-3">地址</dt>
                                 <dd class="col-md-9">
                                     <th:block th:text="${ssrd.server}"/>
                                 </dd>
-
                                 <dt class="col-sm-3">端口</dt>
                                 <dd class="col-sm-9">
                                     <th:block th:text="${ssrd.server_port}"/>
@@ -132,15 +140,11 @@
                                 </dd>
                             </dl>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <!--<a th:href="@{/createQRCode(width=350,height=350,text=${ssrd.link})}" target="_blank"
-                           class="btn btn-info btn-block btn-sm"><i class="fa fa-clone" aria-hidden="true"></i> 复制连接</a>-->
                         <a th:href="@{/createQRCode(width=350,height=350,text=${ssrd.link})}" target="_blank"
-                           class="btn btn-secondary btn-block btn-sm"><i class="fa fa-qrcode" aria-hidden="true"></i>
-                            二维码
-                            &raquo;</a>
+                           class="btn btn-secondary btn-block btn-sm">
+                            <i class="fa fa-qrcode" aria-hidden="true"></i> &nbsp; 二维码 &nbsp; &raquo;</a>
                     </div>
+                    <!--<div class="card-footer"></div>-->
                 </div>
             </div>
         </div>
@@ -154,9 +158,7 @@
         <p class="float-right">
             <a href="#"><i class="fa fa-arrow-up" aria-hidden="true"></i>&nbsp;返回顶部</a>
         </p>
-        <p class="text-muted">&copy; 2017 xxx, Inc. 免费、开源的 SSR 账号爬虫 <a
-                href="https://github.com/zc-zh-001/ShadowSocks-Share"
-                target="_blank">查看项目 &raquo;</a></p>
+        <p class="text-muted">&copy; 2017 xxx, Inc. 免费、开源的 SSR 账号爬虫</p>
     </div>
 </footer>
 

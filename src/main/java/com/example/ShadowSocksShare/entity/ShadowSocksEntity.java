@@ -48,13 +48,17 @@ public class ShadowSocksEntity implements Serializable {
 	@JoinColumn(name = "ss_id")                                        // 在 Details 表增加一个外键列来实现一对多的单向关联
 	private Set<ShadowSocksDetailsEntity> shadowSocksSet;           // 一对多，网站 ShadowSocks 信息
 
-	public String getLink() {
-		if (valid && !shadowSocksSet.isEmpty()) {
+	public String getLink(boolean valid) {
+		if (!shadowSocksSet.isEmpty()) {
 			StringBuilder link = new StringBuilder();
 			for (ShadowSocksDetailsEntity entity : shadowSocksSet) {
-				// 网络测试通过添加到 Link 中
-				if (entity.isValid())
+				if (valid) {
+					if (entity.isValid()) {
+						link.append(entity.getLink()).append("\n");
+					}
+				} else {
 					link.append(entity.getLink()).append("\n");
+				}
 			}
 			return Base64.encodeBase64URLSafeString(link.toString().getBytes());
 		}

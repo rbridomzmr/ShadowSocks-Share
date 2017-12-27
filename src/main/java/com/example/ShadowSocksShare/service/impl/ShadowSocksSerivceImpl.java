@@ -74,11 +74,11 @@ public class ShadowSocksSerivceImpl implements ShadowSocksSerivce {
 	 * 3. 生成 SSR 连接
 	 */
 	@Override
-	public String toSSLink(List<ShadowSocksEntity> entities) {
+	public String toSSLink(List<ShadowSocksEntity> entities, boolean valid) {
 		if (!entities.isEmpty()) {
 			StringBuilder link = new StringBuilder();
 			for (ShadowSocksEntity entity : entities) {
-				link.append(entity.getLink());
+				link.append(entity.getLink(valid));
 			}
 			return link.toString();
 		}

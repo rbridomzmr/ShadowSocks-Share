@@ -23,7 +23,7 @@ public class ShadowSocksCrawlerServiceTest extends BaseTest {
 
 	@Test
 	public void getShadowSocks() {
-		log.debug("{}", iShadowCrawlerServiceImpl.getShadowSocks().getLink());
+		log.debug("{}", iShadowCrawlerServiceImpl.getShadowSocks().getLink(false));
 	}
 
 	public void aa() {

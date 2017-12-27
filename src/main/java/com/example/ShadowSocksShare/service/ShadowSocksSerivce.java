@@ -27,7 +27,7 @@ public interface ShadowSocksSerivce {
 	/**
 	 * 3. 生成 SSR 连接
 	 */
-	String toSSLink(List<ShadowSocksEntity> entities);
+	String toSSLink(List<ShadowSocksEntity> entities, boolean valid);
 
 	/**
 	 * 生成二维码

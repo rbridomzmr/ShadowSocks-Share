@@ -64,7 +64,7 @@ public class ShadowSocksDetailsEntity implements Serializable {
 	private String group; // 组
 
 	@Column
-	private boolean isValid;    // 是否有效
+	private boolean valid;    // 是否有效
 
 	public String getLink() {
 		// 104.236.187.174:1118:auth_sha1_v4:chacha20:tls1.2_ticket_auth:ZGFzamtqZGFr/?obfsparam=&remarks=MTExOCDml6fph5HlsbEgMTDkurogMTAwRyBTU1I&group=Q2hhcmxlcyBYdQ

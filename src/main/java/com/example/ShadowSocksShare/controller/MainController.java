@@ -49,9 +49,9 @@ public class MainController {
 	 */
 	@RequestMapping("/subscribe")
 	@ResponseBody
-	public String subscribe() {
+	public String subscribe(boolean valid) {
 		List<ShadowSocksEntity> ssrList = shadowSocksSerivceImpl.findAll(1, 50);
-		String ssrLink = shadowSocksSerivceImpl.toSSLink(ssrList);
+		String ssrLink = shadowSocksSerivceImpl.toSSLink(ssrList,valid);
 		return StringUtils.isNotBlank(ssrLink) ? ssrLink : "无有效 SSR 连接，请稍后重试！";
 	}
 
