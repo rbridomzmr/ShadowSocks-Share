@@ -10,7 +10,6 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.net.Socket;
 import java.util.Date;
 import java.util.Set;
@@ -24,6 +23,9 @@ import java.util.Set;
  */
 @Slf4j
 public abstract class ShadowSocksCrawlerService {
+	// SS 的协议和混淆
+	protected static final String SS_PROTOCOL = "origin";
+	protected static final String SS_OBFS = "plain";
 	// 目标网站请求超时时间（60 秒）
 	private static final int TIME_OUT = 60 * 1000;
 	// 测试网络超时时间（3 秒）
