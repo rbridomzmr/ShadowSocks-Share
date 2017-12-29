@@ -3,6 +3,7 @@ package com.example.ShadowSocksShare.service;
 
 import com.example.ShadowSocksShare.entity.ShadowSocksEntity;
 import com.google.zxing.WriterException;
+import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,12 +23,17 @@ public interface ShadowSocksSerivce {
 	/**
 	 * 3. 查询 SS 信息
 	 */
-	List<ShadowSocksEntity> findAll(int page, int size);
+	List<ShadowSocksEntity> findAll(Pageable pageable);
 
 	/**
 	 * 3. 生成 SSR 连接
 	 */
 	String toSSLink(List<ShadowSocksEntity> entities, boolean valid);
+
+	/**
+	 * SS 有效性检查，获取 SS 信息，判断端口有效性，并更新数据
+	 */
+	void checkValid();
 
 	/**
 	 * 生成二维码

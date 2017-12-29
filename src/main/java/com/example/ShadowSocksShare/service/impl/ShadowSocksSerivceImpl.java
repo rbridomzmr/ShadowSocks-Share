@@ -2,6 +2,7 @@ package com.example.ShadowSocksShare.service.impl;
 
 import com.example.ShadowSocksShare.dao.ShadowSocksDetailsRepository;
 import com.example.ShadowSocksShare.dao.ShadowSocksRepository;
+import com.example.ShadowSocksShare.entity.ShadowSocksDetailsEntity;
 import com.example.ShadowSocksShare.entity.ShadowSocksEntity;
 import com.example.ShadowSocksShare.service.ShadowSocksCrawlerService;
 import com.example.ShadowSocksShare.service.ShadowSocksSerivce;
@@ -13,13 +14,13 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -64,9 +65,8 @@ public class ShadowSocksSerivceImpl implements ShadowSocksSerivce {
 	 * 3. 查询 SS 信息
 	 */
 	@Override
-	public List<ShadowSocksEntity> findAll(int page, int size) {
-		Sort sort = new Sort(Sort.Direction.DESC, "id");
-		Page<ShadowSocksEntity> entities = shadowSocksRepository.findAll(new PageRequest(0, 10, sort));
+	public List<ShadowSocksEntity> findAll(Pageable pageable) {
+		Page<ShadowSocksEntity> entities = shadowSocksRepository.findAll(pageable);
 		return entities.getContent();
 	}
 
@@ -83,6 +83,26 @@ public class ShadowSocksSerivceImpl implements ShadowSocksSerivce {
 			return link.toString();
 		}
 		return "";
+	}
+
+	/**
+	 * SS 有效性检查，获取 SS 信息，判断端口有效性，并更新数据
+	 */
+	@Override
+	@Transactional
+	public void checkValid() {
+		List<ShadowSocksEntity> entityList = shadowSocksRepository.findAll();
+		for (ShadowSocksEntity shadowSocksEntity : entityList) {
+			for (ShadowSocksDetailsEntity shadowSocksDetailsEntity : shadowSocksEntity.getShadowSocksSet()) {
+				boolean _valid = ShadowSocksCrawlerService.isReachable(shadowSocksDetailsEntity);
+				// 如果检测结果与库中数据 不一致，则更新数据
+				if (_valid != shadowSocksDetailsEntity.isValid()) {
+					shadowSocksDetailsEntity.setValid(_valid);
+					shadowSocksDetailsEntity.setValidTime(new Date());
+					shadowSocksDetailsRepository.save(shadowSocksDetailsEntity);
+				}
+			}
+		}
 	}
 
 	/**

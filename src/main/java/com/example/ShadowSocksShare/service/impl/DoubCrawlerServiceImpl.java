@@ -8,6 +8,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,6 +40,7 @@ public class DoubCrawlerServiceImpl extends ShadowSocksCrawlerService {
 
 				ShadowSocksDetailsEntity ss = parseLink(ssrLink);
 				ss.setValid(false);
+				ss.setValidTime(new Date());
 				ss.setRemarks(document.title());
 				// ss.setGroup(getTargetURL());
 

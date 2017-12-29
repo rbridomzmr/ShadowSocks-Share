@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -56,24 +57,11 @@ public class IShadowCrawlerServiceImpl extends ShadowSocksCrawlerService {
 					String method = StringUtils.substringAfter(ssHtml.get(3).text(), ":");
 					Assert.hasLength(method, "method 不能为空");
 
+					ShadowSocksDetailsEntity ss = null;
 					// 最后一行 可能是 ss 或 ssr 区别是 ss 是 点击获取图片，ssr 是 协议和混淆
 					if (ssHtml.get(4).select("a") != null) {
 						// ss
-						ShadowSocksDetailsEntity ss = new ShadowSocksDetailsEntity(server, server_port, password, method, SS_PROTOCOL, SS_OBFS);
-						ss.setValid(false);
-						ss.setRemarks(document.title());
-						// ss.setGroup(getTargetURL());
-
-						// 测试网络
-						if (isReachable(ss))
-							ss.setValid(true);
-
-						// 无论是否可用都入库
-						set.add(ss);
-
-						log.debug("*************** 第 {} 条 ***************{}{}", i + 1, System.lineSeparator(), ss);
-						// log.debug("{}", ss.getLink());
-
+						ss = new ShadowSocksDetailsEntity(server, server_port, password, method, SS_PROTOCOL, SS_OBFS);
 					} else {
 						// ssr
 						String[] ao = StringUtils.split(ssHtml.get(4).text(), " ");
@@ -84,22 +72,24 @@ public class IShadowCrawlerServiceImpl extends ShadowSocksCrawlerService {
 							String obfs = ao[1];
 							Assert.hasLength(method, "obscure 不能为空");
 
-							ShadowSocksDetailsEntity ss = new ShadowSocksDetailsEntity(server, server_port, password, method, protocol, obfs);
-							ss.setValid(false);
-							ss.setRemarks(document.title());
-							// ss.setGroup(getTargetURL());
-
-							// 测试网络
-							if (isReachable(ss))
-								ss.setValid(true);
-
-							// 无论是否可用都入库
-							set.add(ss);
-
-							log.debug("*************** 第 {} 条 ***************{}{}", i + 1, System.lineSeparator(), ss);
-							// log.debug("{}", ss.getLink());
+							ss = new ShadowSocksDetailsEntity(server, server_port, password, method, protocol, obfs);
 						}
 					}
+
+					ss.setValid(false);
+					ss.setValidTime(new Date());
+					ss.setRemarks(document.title());
+					// ss.setGroup(getTargetURL());
+
+					// 测试网络
+					if (isReachable(ss))
+						ss.setValid(true);
+
+					// 无论是否可用都入库
+					set.add(ss);
+
+					log.debug("*************** 第 {} 条 ***************{}{}", i + 1, System.lineSeparator(), ss);
+					// log.debug("{}", ss.getLink());
 				}
 			} catch (Exception e) {
 				log.error(e.getMessage(), e);

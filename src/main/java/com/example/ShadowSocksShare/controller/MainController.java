@@ -8,6 +8,9 @@ import com.google.zxing.WriterException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,10 +32,10 @@ public class MainController {
 	 * 首页
 	 */
 	@RequestMapping("/")
-	public String index(Model model) {
-		List<ShadowSocksEntity> ssrList = shadowSocksSerivceImpl.findAll(1, 50);
+	public String index(@PageableDefault(page = 0, size = 50, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+		List<ShadowSocksEntity> ssrList = shadowSocksSerivceImpl.findAll(pageable);
 		List<ShadowSocksDetailsEntity> ssrdList = new ArrayList<>();
-		for(ShadowSocksEntity ssr : ssrList) {
+		for (ShadowSocksEntity ssr : ssrList) {
 			ssrdList.addAll(ssr.getShadowSocksSet());
 		}
 		// ssr 信息
@@ -49,9 +52,9 @@ public class MainController {
 	 */
 	@RequestMapping("/subscribe")
 	@ResponseBody
-	public String subscribe(boolean valid) {
-		List<ShadowSocksEntity> ssrList = shadowSocksSerivceImpl.findAll(1, 50);
-		String ssrLink = shadowSocksSerivceImpl.toSSLink(ssrList,valid);
+	public String subscribe(boolean valid, @PageableDefault(page = 0, size = 50, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+		List<ShadowSocksEntity> ssrList = shadowSocksSerivceImpl.findAll(pageable);
+		String ssrLink = shadowSocksSerivceImpl.toSSLink(ssrList, valid);
 		return StringUtils.isNotBlank(ssrLink) ? ssrLink : "无有效 SSR 连接，请稍后重试！";
 	}
 

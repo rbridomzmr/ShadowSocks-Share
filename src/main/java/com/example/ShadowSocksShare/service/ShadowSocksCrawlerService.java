@@ -69,7 +69,7 @@ public abstract class ShadowSocksCrawlerService {
 	/**
 	 * 网络连通性测试
 	 */
-	protected boolean isReachable(ShadowSocksDetailsEntity ss) {
+	public static boolean isReachable(ShadowSocksDetailsEntity ss) {
 		try (Socket socket = new Socket()) {
 			socket.connect(new InetSocketAddress(ss.getServer(), ss.getServer_port()), SOCKET_TIME_OUT);
 			return true;

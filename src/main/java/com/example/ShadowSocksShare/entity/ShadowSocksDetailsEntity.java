@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.net.URL;
+import java.util.Date;
 
 /**
  * ssr 信息
@@ -65,6 +66,9 @@ public class ShadowSocksDetailsEntity implements Serializable {
 
 	@Column
 	private boolean valid;    // 是否有效
+
+	@Column
+	private Date validTime;		// 有效性验证时间
 
 	public String getLink() {
 		// 104.236.187.174:1118:auth_sha1_v4:chacha20:tls1.2_ticket_auth:ZGFzamtqZGFr/?obfsparam=&remarks=MTExOCDml6fph5HlsbEgMTDkurogMTAwRyBTU1I&group=Q2hhcmxlcyBYdQ

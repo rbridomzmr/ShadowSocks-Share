@@ -110,8 +110,7 @@
                             <dl class="row">
                                 <dt class="col-md-3">状态</dt>
                                 <dd class="col-md-9">
-                                    <span class="badge" th:text="${ssrd.valid ? '有效' : '无效'}"
-                                          th:classappend="${ssrd.valid ? 'badge-success' : 'badge-danger'}">
+                                    <span th:text="${(ssrd.valid ? '有效' : '无效') + '   ' + #dates.format(ssrd.validTime, 'HH:mm')}" th:classappend="${ssrd.valid ? 'badge badge-success' : 'badge badge-danger'}">
                                     </span>
                                 </dd>
                                 <dt class="col-md-3">地址</dt>

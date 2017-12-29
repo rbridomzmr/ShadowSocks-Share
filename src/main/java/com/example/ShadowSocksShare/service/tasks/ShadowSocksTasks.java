@@ -20,8 +20,7 @@ import java.io.IOException;
 @Component
 public class ShadowSocksTasks {
 	@Autowired
-	private ShadowSocksSerivce serivce;
-
+	private ShadowSocksSerivce shadowSocksSerivce;
 	@Autowired
 	@Qualifier("iShadowCrawlerServiceImpl")
 	private ShadowSocksCrawlerService iShadowCrawlerServiceImpl;    // ishadow
@@ -34,12 +33,12 @@ public class ShadowSocksTasks {
 	 */
 	@Scheduled(initialDelay = 10 * 1000, fixedRate = IShadowCrawlerServiceImpl.REFRESH_TIME)
 	public void iShadowCrawler() {
-		serivce.crawlerAndSave(iShadowCrawlerServiceImpl);
+		shadowSocksSerivce.crawlerAndSave(iShadowCrawlerServiceImpl);
 	}
 
 	@Scheduled(initialDelay = 20 * 1000, fixedRate = DoubCrawlerServiceImpl.REFRESH_TIME)
 	public void doubCrawler() {
-		serivce.crawlerAndSave(doubCrawlerServiceImpl);
+		shadowSocksSerivce.crawlerAndSave(doubCrawlerServiceImpl);
 	}
 
 	/**
@@ -48,5 +47,16 @@ public class ShadowSocksTasks {
 	@Scheduled(initialDelay = 10 * 60 * 1000, fixedRate = 10 * 60 * 1000)
 	public void monitor() throws IOException {
 		Jsoup.connect("https://shadowsocks-share.herokuapp.com/subscribe").get();
+	}
+
+	/**
+	 * SS 有效性检查，每 1 小时
+	 */
+	// @Scheduled(cron = "0 */2 * * * ?")
+	@Scheduled(cron = "0 0 */1 * * ?")
+	public void checkValid() {
+		log.debug("定时有效性检查开始...");
+		shadowSocksSerivce.checkValid();
+		log.debug("定时有效性检查结束...");
 	}
 }
