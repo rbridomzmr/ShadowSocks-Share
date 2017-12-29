@@ -33,6 +33,7 @@ spring:
     generate-ddl:  true
     show-sql:  true
     open-in-view:  true
+    properties.hibernate.jdbc.time_zone:  GMT+8
 
     hibernate:
       # 使用Hibernate初始化数据库
